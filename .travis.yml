@@ -1,0 +1,23 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t sid2harthgupta/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run sid2harthgupta/react-test npm test -- --coverage
+
+after_success:
+  - docker build -t sid2harthgupta/multi-client ./client
+  - docker build -t sid2harthgupta/multi-nginx ./nginx
+  - docker build -t sid2harthgupta/multi-server ./server
+  - docker build -t sid2harthgupta/multi-worker ./worker
+  # Log in to the docker CLI
+  # Enter credentials on Travis
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take these iages and push them to docker hub
+  - docker push sid2harthgupta/multi-client
+  - docker sid2harthgupta/multi-nginx
+  - docker sid2harthgupta/multi-server
+  - docker sid2harthgupta/multi-worker
