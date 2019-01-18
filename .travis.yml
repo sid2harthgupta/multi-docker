@@ -18,6 +18,6 @@ after_success:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   # Take these iages and push them to docker hub
   - docker push sid2harthgupta/multi-client
-  - docker sid2harthgupta/multi-nginx
-  - docker sid2harthgupta/multi-server
-  - docker sid2harthgupta/multi-worker
+  - docker push sid2harthgupta/multi-nginx
+  - docker push sid2harthgupta/multi-server
+  - docker push sid2harthgupta/multi-worker
